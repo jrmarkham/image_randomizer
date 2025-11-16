@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' show Response, get;
 
-
 const _photoAPI = 'https://november7-730026606190.europe-west1.run.app/image/';
 
 abstract class BasePhotoService {
   Future<String> getPhotoUrl();
+  Future<Uint8List?> getPhotoBytes(String imageUrl);
 }
 
 class PhotoService extends BasePhotoService {
@@ -36,5 +36,22 @@ class PhotoService extends BasePhotoService {
       return '';
     }
   }
-}
 
+  @override
+  Future<Uint8List?> getPhotoBytes(String imageUrl) async {
+    try {
+      debugPrint('_PhotoApi: $imageUrl');
+      final response = await get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+      debugPrint('_PhotoApi no data:');
+      return null;
+    } catch (e) {
+      debugPrint('_PhotoApi error: $e');
+      return null;
+    }
+  }
+
+
+}

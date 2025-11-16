@@ -1,14 +1,6 @@
 part of 'photo_cubit.dart';
 
-enum PhotoStatus {
-  init,
-  error,
-  loadPhoto,
-  imageLoading,
-  imageComplete,
-  colorTransition,
-  complete,
-}
+enum PhotoStatus { init, error, loadPhoto, imageLoading, colorTransition, complete }
 
 @immutable
 class PhotoState {
@@ -38,15 +30,16 @@ class PhotoState {
       colorLight = Colors.amberAccent,
       currentColorDetected = Colors.blueGrey,
       previousColorDetected = Colors.blueGrey,
-      imageUrl = '', errorMessage = '';
+      imageUrl = '',
+      errorMessage = '';
 
   const PhotoState.error(this.errorMessage)
-      : status = PhotoStatus.error,
-        colorDark = Colors.deepPurple,
-        colorLight = Colors.amberAccent,
-        currentColorDetected = Colors.blueGrey,
-        previousColorDetected = Colors.blueGrey,
-        imageUrl = '';
+    : status = PhotoStatus.error,
+      colorDark = Colors.deepPurple,
+      colorLight = Colors.amberAccent,
+      currentColorDetected = Colors.blueGrey,
+      previousColorDetected = Colors.blueGrey,
+      imageUrl = '';
 
   PhotoState copyWith(
     PhotoStatus setStatus, {
@@ -64,6 +57,6 @@ class PhotoState {
     currentColorDetected: updateCurrentColorDetected ?? currentColorDetected,
     previousColorDetected: updatePreviousColorDetected ?? previousColorDetected,
     imageUrl: updateImageUrl ?? imageUrl,
-    errorMessage: ''
+    errorMessage: '',
   );
 }

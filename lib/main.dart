@@ -18,16 +18,10 @@ class MyApp extends StatelessWidget {
     final mediaQueryData = MediaQuery.of(context);
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => DisplayCubit(mediaQueryData)),
-      ],
+      providers: [BlocProvider(create: (context) => DisplayCubit(mediaQueryData))],
       child: BlocBuilder<DisplayCubit, DisplayState>(
         builder: (context, state) {
-          return MaterialApp(
-            title: text.titleLabel,
-            theme: state.themeData,
-            home: const CoreApp(),
-          );
+          return MaterialApp(title: text.titleLabel, theme: state.themeData, home: const CoreApp());
         },
       ),
     );
