@@ -32,8 +32,8 @@ class CoreApp extends StatelessWidget {
               return Column(
                 children: [
                   /// ADD SWITCH BY STATUS ///
-                  Text('Photo State :: ${state.status}'),
-                  Text('Photo State :: ${state.imageUrl}'),
+                  // Text('Photo State :: ${state.status}'),
+                  // Text('Photo State :: ${state.imageUrl}'),
 
                   if (state.status == PhotoStatus.error) ...[
                     Text(state.errorMessage),
@@ -52,7 +52,7 @@ class CoreApp extends StatelessWidget {
                           if (loadingProgress == null) {
                             return Container(
                               width: displayMediaData.size.width,
-                              height: displayMediaData.size.height * 0.55,
+                              height: displayMediaData.size.height * 0.65,
                               color: state.currentColorDetected,
                               child: Center(
                                 child: SizedBox(
@@ -75,9 +75,9 @@ class CoreApp extends StatelessWidget {
                           );
                         },
                     ),
-                    Spacer(),
+
                     ElevatedButton(onPressed: loadImageFunction, child: Text(text.newImageButtonLabel)),
-                    Spacer(),
+
                   ],
                 ],
               );
