@@ -52,6 +52,4 @@ class PhotoService extends BasePhotoService {
       return null;
     }
   }
-
-
 }

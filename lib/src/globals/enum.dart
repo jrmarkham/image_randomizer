@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-enum BaseColor{
+enum BaseColor {
   white,
   black,
   red,
@@ -12,33 +11,25 @@ enum BaseColor{
   brown,
   maroon;
 
-
-
-  static BaseColor? getEnumFromLabel (String colorLabel) {
-    for(final color in BaseColor.values) {
-
-      if(color.name == colorLabel.toLowerCase().trim()) {
+  static BaseColor? getEnumFromLabel(String colorLabel) {
+    for (final color in BaseColor.values) {
+      if (color.name == colorLabel.toLowerCase().trim()) {
         return color;
       }
-
     }
     return null;
   }
 
-  Color? getFromLabel (String colorLabel) {
-    for(final color in BaseColor.values) {
-
-      if(color.name == colorLabel.toLowerCase().trim()) {
+  Color? getFromLabel(String colorLabel) {
+    for (final color in BaseColor.values) {
+      if (color.name == colorLabel.toLowerCase().trim()) {
         return color.getColorFromEnum();
       }
-
     }
     return null;
   }
 
-  Color getColorFromEnum() => switch(this) {
-
-
+  Color getColorFromEnum() => switch (this) {
     BaseColor.white => Colors.white,
 
     BaseColor.black => Colors.black,
@@ -57,6 +48,4 @@ enum BaseColor{
 
     BaseColor.maroon => Color(0xFF550000),
   };
-
-
 }
