@@ -42,7 +42,12 @@ class _DisplayContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<DisplayCubit, DisplayState>(
     builder: (context, state) {
-      return MaterialApp(title: text.titleLabel, theme: state.themeData, home: const CoreApp());
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: text.titleLabel,
+        theme: state.themeData,
+        home: const CoreApp(),
+      );
     },
   );
 }
