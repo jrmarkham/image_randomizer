@@ -33,18 +33,15 @@ class CoreApp extends StatelessWidget {
               child: switch (state.status) {
                 PhotoStatus.init => Column(children: [Center(child: CircularProgressIndicator())]),
                 PhotoStatus.error => _ErrorDisplay(errorMessage: state.errorMessage, errorCallback: loadImageFunction),
-                PhotoStatus.photoLoading ||
-                PhotoStatus.complete =>
+                PhotoStatus.photoLoading || PhotoStatus.complete =>
                   state.imageUrl.isEmpty
                       ? Column(
                           children: [
                             Text(text.loadImage),
                             SizedBox(height: numbers.coreSpacing),
 
-
                             Center(
                               child: FadeAnimator(
-
                                 child: ElevatedButton(
                                   onPressed: loadImageFunction,
                                   child: Text(text.newImageButtonLabel),
@@ -93,20 +90,20 @@ class CoreApp extends StatelessWidget {
                               ),
                             ),
 
-                           if (state.status == PhotoStatus.complete)
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: numbers.imageReloadButtonTopPadding),
-                                child: FadeAnimator(
-                                  doFadeIn: true,
-                                  child: ElevatedButton(
-                                    onPressed: loadImageFunction,
-                                    child: Text(text.newImageButtonLabel),
+                            if (state.status == PhotoStatus.complete)
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: numbers.imageReloadButtonTopPadding),
+                                  child: FadeAnimator(
+                                    doFadeIn: true,
+                                    child: ElevatedButton(
+                                      onPressed: loadImageFunction,
+                                      child: Text(text.newImageButtonLabel),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
               },

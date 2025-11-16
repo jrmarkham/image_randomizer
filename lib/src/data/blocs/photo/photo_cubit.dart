@@ -36,11 +36,9 @@ class PhotoCubit extends Cubit<PhotoState> with PhotoCubitMixin {
 
     if (imageBytes != null) {
       final dominateColor = await DominantColorDetector.analyze(imageBytes);
+
       /// GET UNIQUE COLOR FOR IMAGE
-      final newColor = getColorFromDominateResults(
-        dominateColor: dominateColor,
-        lastColor: state.currentColorDetected,
-      );
+      final newColor = getColorFromDominateResults(dominateColor: dominateColor, lastColor: state.currentColorDetected);
 
       emit(
         state.copyWith(

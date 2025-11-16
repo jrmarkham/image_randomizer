@@ -60,6 +60,5 @@ class PhotoState {
     errorMessage: '',
   );
 
-
-  bool get backGroundOn => status == PhotoStatus.complete ||status == PhotoStatus.photoLoading;
+  bool get backGroundOn => status == PhotoStatus.complete || status == PhotoStatus.photoLoading;
 }

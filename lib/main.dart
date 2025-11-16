@@ -19,18 +19,13 @@ class MyApp extends StatelessWidget {
     final mediaQuerySize = MediaQuery.of(context).size;
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => DisplayCubit(mediaQuerySize)),
-      ],
+      providers: [BlocProvider(create: (context) => DisplayCubit(mediaQuerySize))],
       child: kIsWeb
           ? LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                final Size newSize = Size(
-                  constraints.maxWidth,
-                  constraints.maxHeight,
-                );
+                final Size newSize = Size(constraints.maxWidth, constraints.maxHeight);
 
-                debugPrint ('Size update $newSize');
+                debugPrint('Size update $newSize');
 
                 context.read<DisplayCubit>().updateMediaSize(newSize);
                 return _DisplayContent();
@@ -47,11 +42,7 @@ class _DisplayContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<DisplayCubit, DisplayState>(
     builder: (context, state) {
-      return MaterialApp(
-        title: text.titleLabel,
-        theme: state.themeData,
-        home: const CoreApp(),
-      );
+      return MaterialApp(title: text.titleLabel, theme: state.themeData, home: const CoreApp());
     },
   );
 }

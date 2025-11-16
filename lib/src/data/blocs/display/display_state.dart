@@ -10,5 +10,5 @@ class DisplayState {
   DisplayState.init(this.mediaSize) : themeData = theme.lightTheme;
 
   DisplayState copyWith({ThemeData? updateTheme, Size? updateMediaSize}) =>
-      DisplayState(mediaSize: updateMediaSize ?? mediaSize, themeData: updateTheme?? themeData,);
+      DisplayState(mediaSize: updateMediaSize ?? mediaSize, themeData: updateTheme ?? themeData);
 }

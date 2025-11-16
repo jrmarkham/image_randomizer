@@ -12,7 +12,6 @@ class DisplayCubit extends Cubit<DisplayState> {
     emit(state.copyWith(updateTheme: state.themeData == theme.lightTheme ? theme.darkTheme : theme.lightTheme));
   }
 
-
   void updateMediaSize(Size updateMediaSize) {
     emit(state.copyWith(updateMediaSize: updateMediaSize));
   }
