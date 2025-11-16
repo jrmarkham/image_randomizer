@@ -6,9 +6,14 @@ import '../../../globals/themes.dart' as theme;
 part 'display_state.dart';
 
 class DisplayCubit extends Cubit<DisplayState> {
-  DisplayCubit(MediaQueryData setMediaQueryData) : super(DisplayState.init(setMediaQueryData)); // Initial theme
+  DisplayCubit(Size setMediaSize) : super(DisplayState.init(setMediaSize)); // Initial theme
 
   void toggleTheme() {
     emit(state.copyWith(updateTheme: state.themeData == theme.lightTheme ? theme.darkTheme : theme.lightTheme));
+  }
+
+
+  void updateMediaSize(Size updateMediaSize) {
+    emit(state.copyWith(updateMediaSize: updateMediaSize));
   }
 }

@@ -1,6 +1,6 @@
 part of 'photo_cubit.dart';
 
-enum PhotoStatus { init, error, loadPhoto, imageLoading, colorTransition, complete }
+enum PhotoStatus { init, error, photoLoading, complete }
 
 @immutable
 class PhotoState {
@@ -59,4 +59,7 @@ class PhotoState {
     imageUrl: updateImageUrl ?? imageUrl,
     errorMessage: '',
   );
+
+
+  bool get backGroundOn => status == PhotoStatus.complete ||status == PhotoStatus.photoLoading;
 }

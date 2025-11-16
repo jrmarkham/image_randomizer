@@ -12,36 +12,43 @@ class CoreApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayMediaData = context.watch<DisplayCubit>().state.mediaQueryData;
-
+    final displayMediaSize = context.watch<DisplayCubit>().state.mediaSize;
     final toggleThemeFunction = context.read<DisplayCubit>().toggleTheme;
-    return SafeArea(
-      child: BlocProvider(
-        create: (context) => PhotoCubit(),
-        child: Scaffold(
-          appBar: AppBar(title: Text(text.titleLabel)),
-          body: BlocBuilder<PhotoCubit, PhotoState>(
-            builder: (context, state) {
-              final loadImageFunction = context.read<PhotoCubit>().loadNewImage;
-              final errorImageFunction = context.read<PhotoCubit>().errorImageLoad;
-              //  final imageLoadedFunction = context.read<PhotoCubit>().imageLoadedComplete;
-              final runColorTransitionFunction = context.read<PhotoCubit>().runColorTransition;
-              final colorTransactionCompleteFunction = context.read<PhotoCubit>().colorTransactionComplete;
+    return BlocProvider(
+      create: (context) => PhotoCubit(),
+      child: Scaffold(
+        appBar: AppBar(title: Text(text.titleLabel)),
+        body: BlocBuilder<PhotoCubit, PhotoState>(
+          builder: (context, state) {
+            final loadImageFunction = context.read<PhotoCubit>().loadNewImage;
+            final errorImageFunction = context.read<PhotoCubit>().errorImageLoad;
+            final colorTransactionCompleteFunction = context.read<PhotoCubit>().colorTransactionComplete;
 
-              return switch (state.status) {
+            final backColor = state.backGroundOn ? null : state.currentColorDetected;
+
+            return Container(
+              width: displayMediaSize.width,
+              height: displayMediaSize.height,
+              color: backColor,
+              child: switch (state.status) {
                 PhotoStatus.init => Column(children: [Center(child: CircularProgressIndicator())]),
                 PhotoStatus.error => _ErrorDisplay(errorMessage: state.errorMessage, errorCallback: loadImageFunction),
-                PhotoStatus.loadPhoto ||
-                PhotoStatus.imageLoading ||
-                PhotoStatus.colorTransition ||
+                PhotoStatus.photoLoading ||
                 PhotoStatus.complete =>
                   state.imageUrl.isEmpty
                       ? Column(
                           children: [
+                            Text(text.loadImage),
+                            SizedBox(height: numbers.coreSpacing),
+
+
                             Center(
-                              child: ElevatedButton(
-                                onPressed: loadImageFunction,
-                                child: Text(text.newImageButtonLabel),
+                              child: FadeAnimator(
+
+                                child: ElevatedButton(
+                                  onPressed: loadImageFunction,
+                                  child: Text(text.newImageButtonLabel),
+                                ),
                               ),
                             ),
                           ],
@@ -58,16 +65,17 @@ class CoreApp extends StatelessWidget {
 
                                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                                   if (loadingProgress == null) {
-                                    return Container(
-                                      width: displayMediaData.size.width,
-                                      height: displayMediaData.size.height,
-                                      color: state.currentColorDetected,
+                                    return ColorTweenAnimation(
+                                      width: displayMediaSize.width,
+                                      height: displayMediaSize.height,
+                                      colorStart: state.currentColorDetected,
+                                      colorFinish: state.previousColorDetected,
                                       child: Center(
                                         child: SizedBox(
-                                          width: displayMediaData.size.width * numbers.imageWidthPercentage,
+                                          width: displayMediaSize.width * numbers.imageWidthPercentage,
                                           child: FadeAnimator(
                                             doFadeIn: true,
-                                            completeCallback: runColorTransitionFunction,
+                                            completeCallback: colorTransactionCompleteFunction,
                                             child: child,
                                           ),
                                         ),
@@ -85,24 +93,27 @@ class CoreApp extends StatelessWidget {
                               ),
                             ),
 
-                            //if (state.status == PhotoStatus.complete)
+                           if (state.status == PhotoStatus.complete)
                             Align(
-                              alignment: Alignment.bottomCenter,
+                              alignment: Alignment.topCenter,
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: numbers.imageReloadButtonBottomPadding),
-                                child: ElevatedButton(
-                                  onPressed: loadImageFunction,
-                                  child: Text(text.newImageButtonLabel),
+                                padding: const EdgeInsets.only(top: numbers.imageReloadButtonTopPadding),
+                                child: FadeAnimator(
+                                  doFadeIn: true,
+                                  child: ElevatedButton(
+                                    onPressed: loadImageFunction,
+                                    child: Text(text.newImageButtonLabel),
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-              };
-            },
-          ),
-          floatingActionButton: ElevatedButton(onPressed: toggleThemeFunction, child: Text(text.themeButtonLabel)),
+              },
+            );
+          },
         ),
+        floatingActionButton: ElevatedButton(onPressed: toggleThemeFunction, child: Text(text.themeButtonLabel)),
       ),
     );
   }

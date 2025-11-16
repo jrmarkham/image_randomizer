@@ -3,12 +3,12 @@ part of 'display_cubit.dart';
 @immutable
 class DisplayState {
   final ThemeData themeData;
-  final MediaQueryData mediaQueryData;
+  final Size mediaSize;
 
-  const DisplayState({required this.themeData, required this.mediaQueryData});
+  const DisplayState({required this.themeData, required this.mediaSize});
 
-  DisplayState.init(this.mediaQueryData) : themeData = theme.lightTheme;
+  DisplayState.init(this.mediaSize) : themeData = theme.lightTheme;
 
-  DisplayState copyWith({required ThemeData updateTheme}) =>
-      DisplayState(mediaQueryData: mediaQueryData, themeData: updateTheme);
+  DisplayState copyWith({ThemeData? updateTheme, Size? updateMediaSize}) =>
+      DisplayState(mediaSize: updateMediaSize ?? mediaSize, themeData: updateTheme?? themeData,);
 }
